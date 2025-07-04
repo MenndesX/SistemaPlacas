@@ -1,0 +1,59 @@
+﻿@model List<PedidoModel>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="mb-4">Acompanhamento de Pedidos</h1>
+        <a asp-action="CriarPedido" asp-controller="Pedido" class="btn btn-success">Novo Pedido</a>
+    </div>
+
+    @if (ViewBag.StatusList != null)
+    {
+        foreach (var status in ViewBag.StatusList)
+        {
+
+            var countPedidos = Model.Count(p => p.StatusId == status.Id);
+            var pedidosDoStatus = Model.Where(p => p.StatusId == status.Id).ToList();
+
+            <h2 class="text-center mt-5">@status.Nome (@countPedidos)</h2>
+            
+
+            <table class="table table-hover table-bordered mt-5">
+                <thead class="table-primary">
+                    <tr class="text-center">
+                        <th>Pedido</th>
+                        <th>Produto</th>
+                        <th>Cliente</th>
+                        <th>Quantidade</th>
+                        <th>Data do Pedido</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pedido in pedidosDoStatus)
+                    {
+                        <tr class="text-center">
+                            <td>@pedido.PedidoId</td>
+                            <td>@pedido.Produto.Nome</td>
+                            <td>@pedido.Cliente.Nome</td>
+                            <td>@pedido.Quantidade</td>
+                            <td>@pedido.DataPedido.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <form asp-action="VoltarEtapa" asp-controller="Pedido" method="post" class="d-inline">
+                                    <input type="hidden" name="pedidoId" value="@pedido.PedidoId" />
+                                    <button type="submit" class="btn btn-info">Voltar</button>
+                                </form>
+
+                                <a asp-action="Detalhes" asp-controller="Pedido" asp-route-id="@pedido.PedidoId" class="btn btn-warning">Detalhes</a>
+
+                                <form asp-action="AvancarEtapa" asp-controller="Pedido" method="post" class="d-inline">
+                                    <input type="hidden" name="pedidoId" value="@pedido.PedidoId" />
+                                    <button type="submit" class="btn btn-danger">Avançar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+</div>

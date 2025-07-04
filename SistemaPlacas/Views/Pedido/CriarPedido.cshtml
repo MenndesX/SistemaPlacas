@@ -1,0 +1,56 @@
+﻿@model SistemaPlacas.Dto.PedidoDto.CriarPedidoDto
+
+@{
+    ViewData["Title"] = "Criar Pedido";
+}
+
+<h1>Pedido</h1>
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success">@TempData["MensagemSucesso"]</div>
+}
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger">@TempData["MensagemErro"]</div>
+}
+
+<form asp-action="CriarPedido" method="post" class="mt-4">
+    <div class="mb-3">
+        <label asp-for="ProdutoId" class="form-label">Produto</label>
+        <select asp-for="ProdutoId" class="form-select" asp-items="ViewBag.Produtos">
+            <option value="">Selecione um produto</option>
+        </select>
+        <span asp-validation-for="ProdutoId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ClienteId" class="form-label">Cliente</label>
+        <select asp-for="ClienteId" class="form-select" asp-items="ViewBag.Clientes">
+            <option value="">Selecione um cliente</option>
+        </select>
+        <span asp-validation-for="ClienteId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Quantidade" class="form-label">Quantidade</label>
+        <input asp-for="Quantidade" class="form-control" />
+        <span asp-validation-for="Quantidade" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PrecoTotal" class="form-label">Preço Total</label>
+        <input asp-for="PrecoTotal" class="form-control" />
+        <span asp-validation-for="PrecoTotal" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Criar Pedido</button>
+    <a asp-action="Index" asp-controller="Pedido" class="btn btn-secondary">Voltar</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

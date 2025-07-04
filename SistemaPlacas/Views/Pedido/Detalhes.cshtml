@@ -1,0 +1,72 @@
+﻿@model PedidoModel
+
+@{
+    ViewData["Title"] = "Detalhes do Pedido";
+}
+
+<h1>Detalhes do Pedido</h1>
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success">@TempData["MensagemSucesso"]</div>
+}
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger">@TempData["MensagemErro"]</div>
+}
+
+<div class="mb-4">
+    <dl class="row">
+        <dt class="col-sm-2">ID do Pedido</dt>
+        <dd class="col-sm-10">@Model.PedidoId</dd>
+
+        <dt class="col-sm-2">Produto</dt>
+        <dd class="col-sm-10">@Model.Produto.Nome</dd>
+
+        <dt class="col-sm-2">Cliente</dt>
+        <dd class="col-sm-10">@Model.Cliente.Nome</dd>
+
+        <dt class="col-sm-2">Data do Pedido</dt>
+        <dd class="col-sm-10">@Model.DataPedido.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-2">Status</dt>
+        <dd class="col-sm-10">@Model.Status.Nome</dd>
+    </dl>
+</div>
+
+<h4>Editar Pedido</h4>
+
+<form asp-action="Editar" asp-controller="Pedido" method="post">
+    <input type="hidden" asp-for="PedidoId" />
+
+    <div class="mb-3">
+        <label asp-for="ProdutoId" class="form-label">Produto</label>
+        <select asp-for="ProdutoId" class="form-select" asp-items="ViewBag.Produtos">
+            <option value="">Selecione um produto</option>
+        </select>
+        <span asp-validation-for="ProdutoId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Quantidade" class="form-label">Quantidade</label>
+        <input asp-for="Quantidade" class="form-control" />
+        <span asp-validation-for="Quantidade" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PrecoTotal" class="form-label">Preço Total</label>
+        <input asp-for="PrecoTotal" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="PrecoTotal" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+    <a asp-action="Index" asp-controller="Pedido" class="btn btn-secondary">Voltar</a>
+</form>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
