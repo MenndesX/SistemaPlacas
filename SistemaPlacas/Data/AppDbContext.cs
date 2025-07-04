@@ -17,14 +17,15 @@ namespace SistemaPlacas.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<StatusModel>().HasData(
-                new StatusModel { Id = 1, Nome = "Imprimir OS" },
-                new StatusModel { Id = 2, Nome = "Fechamento de Arquivo" },
-                new StatusModel { Id = 3, Nome = "Corte Inicial" },
-                new StatusModel { Id = 4, Nome = "Impressao UV" },
-                new StatusModel { Id = 5, Nome = "Corte Final" }
-                );
+     new StatusModel { Id = 1, Nome = "Recebimento do Pedido" },
+     new StatusModel { Id = 2, Nome = "Análise Técnica" },
+     new StatusModel { Id = 3, Nome = "Pré-Produção" },
+     new StatusModel { Id = 4, Nome = "Produção" },
+     new StatusModel { Id = 5, Nome = "Finalização" }
+ );
 
-                
+
+
 
             base.OnModelCreating(modelBuilder);
         }
